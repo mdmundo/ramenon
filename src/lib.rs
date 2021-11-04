@@ -1,5 +1,3 @@
-// https://doc.rust-lang.org/std/primitive.u16.html#method.checked_sub
-
 const THOUSANDS: [(&str, usize); 3] = [("MMM", 3000), ("MM", 2000), ("M", 1000)];
 
 const HUNDREDS: [(&str, usize); 9] = [
