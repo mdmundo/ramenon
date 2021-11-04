@@ -1,6 +1,7 @@
 // https://doc.rust-lang.org/std/primitive.u16.html#method.checked_sub
 
 const THOUSANDS: [(&str, usize); 3] = [("MMM", 3000), ("MM", 2000), ("M", 1000)];
+
 const HUNDREDS: [(&str, usize); 9] = [
     ("CM", 900),
     ("DCCC", 800),
@@ -12,6 +13,7 @@ const HUNDREDS: [(&str, usize); 9] = [
     ("CC", 200),
     ("C", 100),
 ];
+
 const TENS: [(&str, usize); 9] = [
     ("XC", 90),
     ("LXXX", 80),
@@ -23,6 +25,7 @@ const TENS: [(&str, usize); 9] = [
     ("XX", 20),
     ("X", 10),
 ];
+
 const UNITS: [(&str, usize); 9] = [
     ("IX", 9),
     ("VIII", 8),
