@@ -37,8 +37,27 @@ const UNITS: [(&str, usize); 9] = [
 ];
 
 /// The largest value that can be represented by roman numerals.
+///
+/// # Examples
+///
+/// Basic usage:
+///
+/// ```
+/// assert_eq!(ramenon::MAX, 3_999);
+/// ```
 pub const MAX: usize = 3_999;
 
+/// Converts a roman numeral to an integer, returning `None` if the provided roman numeral is invalid.
+///
+/// # Examples
+///
+/// Basic usage:
+///
+/// ```
+/// let roman = "MMMCMXCIX";
+/// let int = ramenon::to_int(roman);
+/// assert_eq!(int, Some(3_999));
+/// ```
 pub fn to_int(roman: &str) -> Option<usize> {
     let mut strip: &str = roman;
     let mut int: usize = 0;
