@@ -38,6 +38,8 @@ const UNITS: [(&str, usize); 9] = [
     ("I", 1),
 ];
 
+pub const MAX: usize = 3_999;
+
 pub fn to_int(roman: &str) -> Result<usize, &'static str> {
     let mut strip: &str = roman;
     let mut int: usize = 0;
