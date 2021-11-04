@@ -1,3 +1,14 @@
+//! Roman numerals converter
+//!
+//! # Quick Start
+//!
+//! ```
+//! use ramenon::*;
+//!
+//! let int = to_int("MMMCMXCIX");
+//! let roman = to_roman(3_888);
+//! ```
+
 const THOUSANDS: [(&str, usize); 3] = [("MMM", 3000), ("MM", 2000), ("M", 1000)];
 
 const HUNDREDS: [(&str, usize); 9] = [
