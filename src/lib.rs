@@ -38,39 +38,6 @@ const UNITS: [(&str, usize); 9] = [
     ("I", 1),
 ];
 
-// const ALL: [(&str, usize); 30] = [
-//     ("MMM", 3000),
-//     ("MM", 2000),
-//     ("M", 1000),
-//     ("CM", 900),
-//     ("DCCC", 800),
-//     ("DCC", 700),
-//     ("DC", 600),
-//     ("D", 500),
-//     ("CD", 400),
-//     ("CCC", 300),
-//     ("CC", 200),
-//     ("C", 100),
-//     ("XC", 90),
-//     ("LXXX", 80),
-//     ("LXX", 70),
-//     ("LX", 60),
-//     ("L", 50),
-//     ("XL", 40),
-//     ("XXX", 30),
-//     ("XX", 20),
-//     ("X", 10),
-//     ("IX", 9),
-//     ("VIII", 8),
-//     ("VII", 7),
-//     ("VI", 6),
-//     ("V", 5),
-//     ("IV", 4),
-//     ("III", 3),
-//     ("II", 2),
-//     ("I", 1),
-// ];
-
 pub fn to_int(roman: &str) -> Result<usize, &'static str> {
     let mut strip: &str = roman;
     let mut int: usize = 0;
@@ -129,13 +96,7 @@ pub fn to_int(roman: &str) -> Result<usize, &'static str> {
     }
 }
 
-// -> Result<&'static str, &'static str>
-// https://doc.rust-lang.org/std/primitive.slice.html#method.concat
-// https://doc.rust-lang.org/std/primitive.usize.html#method.checked_sub
 pub fn to_roman(int: usize) -> Result<String, &'static str> {
-    // percorrer cada array e fazer a checked_sub
-    // se der Option, coloca a respectiva &str na devida posição no slice
-    // retorna um slice.concat
     let mut partial: usize = int;
     let mut roman = String::new();
     for token in THOUSANDS {
@@ -143,6 +104,7 @@ pub fn to_roman(int: usize) -> Result<String, &'static str> {
             Some(result) => {
                 roman.push_str(token.0);
                 partial = result;
+                break;
             }
             None => continue,
         }
@@ -152,6 +114,7 @@ pub fn to_roman(int: usize) -> Result<String, &'static str> {
             Some(result) => {
                 roman.push_str(token.0);
                 partial = result;
+                break;
             }
             None => continue,
         }
@@ -161,6 +124,7 @@ pub fn to_roman(int: usize) -> Result<String, &'static str> {
             Some(result) => {
                 roman.push_str(token.0);
                 partial = result;
+                break;
             }
             None => continue,
         }
@@ -170,6 +134,7 @@ pub fn to_roman(int: usize) -> Result<String, &'static str> {
             Some(result) => {
                 roman.push_str(token.0);
                 partial = result;
+                break;
             }
             None => continue,
         }
@@ -184,6 +149,34 @@ pub fn to_roman(int: usize) -> Result<String, &'static str> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn int_3_999_to_roman() {
+        let int = 3_999;
+        let roman = to_roman(int);
+        assert_eq!(roman, Ok("MMMCMXCIX".to_owned()));
+    }
+
+    #[test]
+    fn int_3_888_to_roman() {
+        let int = 3_888;
+        let roman = to_roman(int);
+        assert_eq!(roman, Ok("MMMDCCCLXXXVIII".to_owned()));
+    }
+
+    #[test]
+    fn error_int_to_roman() {
+        let int = 4_888;
+        let roman = to_roman(int);
+        assert_eq!(roman, Err("Invalid input"));
+    }
+
+    #[test]
+    fn error_int_to_roman_again() {
+        let int = 0;
+        let roman = to_roman(int);
+        assert_eq!(roman, Err("Invalid input"));
+    }
 
     #[test]
     fn roman_3_999_to_int() {
