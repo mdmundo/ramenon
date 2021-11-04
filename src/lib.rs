@@ -38,7 +38,7 @@ const UNITS: [(&str, usize); 9] = [
 
 pub const MAX: usize = 3_999;
 
-pub fn to_int(roman: &str) -> Result<usize, &'static str> {
+pub fn to_int(roman: &str) -> Option<usize> {
     let mut strip: &str = roman;
     let mut int: usize = 0;
     for token in THOUSANDS {
@@ -90,13 +90,13 @@ pub fn to_int(roman: &str) -> Result<usize, &'static str> {
         }
     }
     if !strip.is_empty() || int == 0 {
-        Err("Invalid input")
+        None
     } else {
-        Ok(int)
+        Some(int)
     }
 }
 
-pub fn to_roman(int: usize) -> Result<String, &'static str> {
+pub fn to_roman(int: usize) -> Option<String> {
     let mut partial: usize = int;
     let mut roman = String::new();
     for token in THOUSANDS {
@@ -140,9 +140,9 @@ pub fn to_roman(int: usize) -> Result<String, &'static str> {
         }
     }
     if partial != 0 || roman.is_empty() {
-        Err("Invalid input")
+        None
     } else {
-        Ok(roman)
+        Some(roman)
     }
 }
 
@@ -154,62 +154,62 @@ mod tests {
     fn int_3_999_to_roman() {
         let int = 3_999;
         let roman = to_roman(int);
-        assert_eq!(roman, Ok("MMMCMXCIX".to_owned()));
+        assert_eq!(roman, Some("MMMCMXCIX".to_owned()));
     }
 
     #[test]
     fn int_3_888_to_roman() {
         let int = 3_888;
         let roman = to_roman(int);
-        assert_eq!(roman, Ok("MMMDCCCLXXXVIII".to_owned()));
+        assert_eq!(roman, Some("MMMDCCCLXXXVIII".to_owned()));
     }
 
     #[test]
     fn error_int_to_roman() {
         let int = 4_888;
         let roman = to_roman(int);
-        assert_eq!(roman, Err("Invalid input"));
+        assert_eq!(roman, None);
     }
 
     #[test]
     fn error_int_to_roman_again() {
         let int = 0;
         let roman = to_roman(int);
-        assert_eq!(roman, Err("Invalid input"));
+        assert_eq!(roman, None);
     }
 
     #[test]
     fn roman_3_999_to_int() {
         let roman = "MMMCMXCIX";
         let int = to_int(roman);
-        assert_eq!(int, Ok(3_999));
+        assert_eq!(int, Some(3_999));
     }
 
     #[test]
     fn roman_3_888_to_int() {
         let roman = "MMMDCCCLXXXVIII";
         let int = to_int(roman);
-        assert_eq!(int, Ok(3_888));
+        assert_eq!(int, Some(3_888));
     }
 
     #[test]
     fn error_roman_to_int() {
         let roman = "XXXXXXMMMDCCCLXXXVIII";
         let int = to_int(roman);
-        assert_eq!(int, Err("Invalid input"));
+        assert_eq!(int, None);
     }
 
     #[test]
     fn error_roman_to_int_again() {
         let roman = "VIIII";
         let int = to_int(roman);
-        assert_eq!(int, Err("Invalid input"));
+        assert_eq!(int, None);
     }
 
     #[test]
     fn error_roman_to_int_retry() {
         let roman = "IIV";
         let int = to_int(roman);
-        assert_eq!(int, Err("Invalid input"));
+        assert_eq!(int, None);
     }
 }
