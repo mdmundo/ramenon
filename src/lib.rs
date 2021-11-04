@@ -38,6 +38,39 @@ const UNITS: [(&str, usize); 9] = [
     ("I", 1),
 ];
 
+// const ALL: [(&str, usize); 30] = [
+//     ("MMM", 3000),
+//     ("MM", 2000),
+//     ("M", 1000),
+//     ("CM", 900),
+//     ("DCCC", 800),
+//     ("DCC", 700),
+//     ("DC", 600),
+//     ("D", 500),
+//     ("CD", 400),
+//     ("CCC", 300),
+//     ("CC", 200),
+//     ("C", 100),
+//     ("XC", 90),
+//     ("LXXX", 80),
+//     ("LXX", 70),
+//     ("LX", 60),
+//     ("L", 50),
+//     ("XL", 40),
+//     ("XXX", 30),
+//     ("XX", 20),
+//     ("X", 10),
+//     ("IX", 9),
+//     ("VIII", 8),
+//     ("VII", 7),
+//     ("VI", 6),
+//     ("V", 5),
+//     ("IV", 4),
+//     ("III", 3),
+//     ("II", 2),
+//     ("I", 1),
+// ];
+
 pub fn to_int(roman: &str) -> Result<usize, &'static str> {
     let mut strip: &str = roman;
     let mut int: usize = 0;
@@ -89,10 +122,62 @@ pub fn to_int(roman: &str) -> Result<usize, &'static str> {
             }
         }
     }
-    if strip.len() > 0 || int == 0 {
+    if !strip.is_empty() || int == 0 {
         Err("Invalid input")
     } else {
         Ok(int)
+    }
+}
+
+// -> Result<&'static str, &'static str>
+// https://doc.rust-lang.org/std/primitive.slice.html#method.concat
+// https://doc.rust-lang.org/std/primitive.usize.html#method.checked_sub
+pub fn to_roman(int: usize) -> Result<String, &'static str> {
+    // percorrer cada array e fazer a checked_sub
+    // se der Option, coloca a respectiva &str na devida posição no slice
+    // retorna um slice.concat
+    let mut partial: usize = int;
+    let mut roman = String::new();
+    for token in THOUSANDS {
+        match partial.checked_sub(token.1) {
+            Some(result) => {
+                roman.push_str(token.0);
+                partial = result;
+            }
+            None => continue,
+        }
+    }
+    for token in HUNDREDS {
+        match partial.checked_sub(token.1) {
+            Some(result) => {
+                roman.push_str(token.0);
+                partial = result;
+            }
+            None => continue,
+        }
+    }
+    for token in TENS {
+        match partial.checked_sub(token.1) {
+            Some(result) => {
+                roman.push_str(token.0);
+                partial = result;
+            }
+            None => continue,
+        }
+    }
+    for token in UNITS {
+        match partial.checked_sub(token.1) {
+            Some(result) => {
+                roman.push_str(token.0);
+                partial = result;
+            }
+            None => continue,
+        }
+    }
+    if partial != 0 || roman.is_empty() {
+        Err("Invalid input")
+    } else {
+        Ok(roman)
     }
 }
 
