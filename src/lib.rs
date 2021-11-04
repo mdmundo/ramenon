@@ -36,6 +36,7 @@ const UNITS: [(&str, usize); 9] = [
     ("I", 1),
 ];
 
+/// The largest value that can be represented by roman numerals.
 pub const MAX: usize = 3_999;
 
 pub fn to_int(roman: &str) -> Option<usize> {
