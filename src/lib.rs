@@ -33,7 +33,7 @@ const TABLE: [(&str, usize, usize); 30] = [
     ("I", 1, 0),
 ];
 
-pub fn to_int(roman: &str) -> usize {
+pub fn to_int(roman: &str) -> Result<usize, &'static str> {
     let mut skip: usize = 0;
     let mut int: usize = 0;
     for token in TABLE {
@@ -46,10 +46,15 @@ pub fn to_int(roman: &str) -> usize {
                 int += token.1;
                 skip = token.2;
             }
-            None => continue,
+            None => {
+                if token == *TABLE.last().unwrap() && int == 0 {
+                    return Err("Invalid input");
+                }
+                continue;
+            }
         }
     }
-    int
+    Ok(int)
 }
 
 #[cfg(test)]
@@ -60,13 +65,20 @@ mod tests {
     fn roman_3_999_to_int() {
         let roman = "MMMCMXCIX";
         let int = to_int(roman);
-        assert_eq!(int, 3_999);
+        assert_eq!(int, Ok(3_999));
     }
 
     #[test]
     fn roman_3_888_to_int() {
         let roman = "MMMDCCCLXXXVIII";
         let int = to_int(roman);
-        assert_eq!(int, 3_888);
+        assert_eq!(int, Ok(3_888));
+    }
+
+    #[test]
+    fn error_roman_to_int() {
+        let roman = "XXXXXXMMMDCCCLXXXVIII";
+        let int = to_int(roman);
+        assert_eq!(int, Ok(3_888));
     }
 }
