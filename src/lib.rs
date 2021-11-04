@@ -54,9 +54,11 @@ pub const MAX: usize = 3_999;
 /// Basic usage:
 ///
 /// ```
-/// let roman = "MMMCMXCIX";
-/// let int = ramenon::to_int(roman);
+/// let int = ramenon::to_int("MMMCMXCIX");
 /// assert_eq!(int, Some(3_999));
+///
+/// let int = ramenon::to_int("IIV");
+/// assert_eq!(int, None);
 /// ```
 pub fn to_int(roman: &str) -> Option<usize> {
     let mut strip: &str = roman;
@@ -116,6 +118,21 @@ pub fn to_int(roman: &str) -> Option<usize> {
     }
 }
 
+/// Converts an integer to a roman numeral, returning `None` if the provided integer is invalid.
+///
+/// Note that interger must be between 1 and 3999.
+///
+/// # Examples
+///
+/// Basic usage:
+///
+/// ```
+/// let roman = ramenon::to_roman(3_888);
+/// assert_eq!(roman, Some("MMMDCCCLXXXVIII".to_owned()));
+///
+/// let roman = ramenon::to_roman(4_888);
+/// assert_eq!(roman, None);
+/// ```
 pub fn to_roman(int: usize) -> Option<String> {
     let mut partial: usize = int;
     let mut roman = String::new();
