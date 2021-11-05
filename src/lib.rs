@@ -95,6 +95,9 @@ pub fn to_int(roman: &str) -> Option<usize> {
     let mut slice: &str = roman;
     let mut int: usize = 0;
     for token in THOUSANDS {
+        if slice.is_empty() {
+            break;
+        }
         match slice.strip_prefix(token.0) {
             Some(postfix) => {
                 slice = postfix;
@@ -107,6 +110,9 @@ pub fn to_int(roman: &str) -> Option<usize> {
         }
     }
     for token in HUNDREDS {
+        if slice.is_empty() {
+            break;
+        }
         match slice.strip_prefix(token.0) {
             Some(postfix) => {
                 slice = postfix;
@@ -119,6 +125,9 @@ pub fn to_int(roman: &str) -> Option<usize> {
         }
     }
     for token in TENS {
+        if slice.is_empty() {
+            break;
+        }
         match slice.strip_prefix(token.0) {
             Some(postfix) => {
                 slice = postfix;
@@ -131,6 +140,9 @@ pub fn to_int(roman: &str) -> Option<usize> {
         }
     }
     for token in UNITS {
+        if slice.is_empty() {
+            break;
+        }
         match slice.strip_prefix(token.0) {
             Some(postfix) => {
                 slice = postfix;
@@ -168,6 +180,9 @@ pub fn to_roman(int: usize) -> Option<String> {
     let mut partial: usize = int;
     let mut roman = String::new();
     for token in THOUSANDS {
+        if partial == 0 {
+            break;
+        }
         match partial.checked_sub(token.1) {
             Some(result) => {
                 roman.push_str(token.0);
@@ -178,6 +193,9 @@ pub fn to_roman(int: usize) -> Option<String> {
         }
     }
     for token in HUNDREDS {
+        if partial == 0 {
+            break;
+        }
         match partial.checked_sub(token.1) {
             Some(result) => {
                 roman.push_str(token.0);
@@ -188,6 +206,9 @@ pub fn to_roman(int: usize) -> Option<String> {
         }
     }
     for token in TENS {
+        if partial == 0 {
+            break;
+        }
         match partial.checked_sub(token.1) {
             Some(result) => {
                 roman.push_str(token.0);
@@ -198,6 +219,9 @@ pub fn to_roman(int: usize) -> Option<String> {
         }
     }
     for token in UNITS {
+        if partial == 0 {
+            break;
+        }
         match partial.checked_sub(token.1) {
             Some(result) => {
                 roman.push_str(token.0);
