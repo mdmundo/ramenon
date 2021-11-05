@@ -5,8 +5,14 @@
 //! ```
 //! use ramenon::*;
 //!
-//! let int = to_int("MMMCMXCIX");
-//! let roman = to_roman(3_888);
+//! let int = 3_888;
+//! let roman = "MMMDCCCLXXXVIII";
+//!
+//! let roman_to_int = to_int(roman);
+//! let int_to_roman = to_roman(int);
+//!
+//! assert_eq!(int, roman_to_int.unwrap());
+//! assert_eq!(roman, int_to_roman.unwrap().as_str());
 //! ```
 
 const THOUSANDS: [(&str, usize); 3] = [("MMM", 3000), ("MM", 2000), ("M", 1000)];
@@ -153,7 +159,7 @@ pub fn to_int(roman: &str) -> Option<usize> {
 ///
 /// ```
 /// let roman = ramenon::to_roman(3_888);
-/// assert_eq!(roman, Some("MMMDCCCLXXXVIII".to_owned()));
+/// assert_eq!(roman, Some(String::from("MMMDCCCLXXXVIII")));
 ///
 /// let roman = ramenon::to_roman(4_888);
 /// assert_eq!(roman, None);
@@ -216,14 +222,14 @@ mod tests {
     fn int_3_999_to_roman() {
         let int = 3_999;
         let roman = to_roman(int);
-        assert_eq!(roman, Some("MMMCMXCIX".to_owned()));
+        assert_eq!(roman, Some(String::from("MMMCMXCIX")));
     }
 
     #[test]
     fn int_3_888_to_roman() {
         let int = 3_888;
         let roman = to_roman(int);
-        assert_eq!(roman, Some("MMMDCCCLXXXVIII".to_owned()));
+        assert_eq!(roman, Some(String::from("MMMDCCCLXXXVIII")));
     }
 
     #[test]
