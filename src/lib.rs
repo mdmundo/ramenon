@@ -92,12 +92,12 @@ pub const MAX: usize = 3_999;
 /// assert_eq!(int, None);
 /// ```
 pub fn to_int(roman: &str) -> Option<usize> {
-    let mut strip: &str = roman;
+    let mut slice: &str = roman;
     let mut int: usize = 0;
     for token in THOUSANDS {
-        match strip.strip_prefix(token.0) {
-            Some(new_strip) => {
-                strip = new_strip;
+        match slice.strip_prefix(token.0) {
+            Some(postfix) => {
+                slice = postfix;
                 int += token.1;
                 break;
             }
@@ -107,9 +107,9 @@ pub fn to_int(roman: &str) -> Option<usize> {
         }
     }
     for token in HUNDREDS {
-        match strip.strip_prefix(token.0) {
-            Some(new_strip) => {
-                strip = new_strip;
+        match slice.strip_prefix(token.0) {
+            Some(postfix) => {
+                slice = postfix;
                 int += token.1;
                 break;
             }
@@ -119,9 +119,9 @@ pub fn to_int(roman: &str) -> Option<usize> {
         }
     }
     for token in TENS {
-        match strip.strip_prefix(token.0) {
-            Some(new_strip) => {
-                strip = new_strip;
+        match slice.strip_prefix(token.0) {
+            Some(postfix) => {
+                slice = postfix;
                 int += token.1;
                 break;
             }
@@ -131,9 +131,9 @@ pub fn to_int(roman: &str) -> Option<usize> {
         }
     }
     for token in UNITS {
-        match strip.strip_prefix(token.0) {
-            Some(new_strip) => {
-                strip = new_strip;
+        match slice.strip_prefix(token.0) {
+            Some(postfix) => {
+                slice = postfix;
                 int += token.1;
                 break;
             }
@@ -142,7 +142,7 @@ pub fn to_int(roman: &str) -> Option<usize> {
             }
         }
     }
-    if !strip.is_empty() || int == 0 {
+    if !slice.is_empty() || int == 0 {
         None
     } else {
         Some(int)
