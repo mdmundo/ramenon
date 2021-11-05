@@ -1,9 +1,9 @@
 [package]
 name = "ramenon"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 description = "Roman numerals converter"
-documentation = "https://docs.rs/crate/ramenon/"
+documentation = "https://docs.rs/ramenon/0.1.2/ramenon/"
 readme = "README.md"
 homepage = "https://crates.io/crates/ramenon"
 repository = "https://github.com/mdmundo/ramenon/"
